@@ -2,6 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const name = 'Jorna'
+
+  const handleNameChange = () => {
+    const names = ['Jorna', 'Wing', 'Hong10', 'Taisuke']
+    const init = Math.floor(Math.random() * 3)
+    return names[init]
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -9,14 +16,11 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+          <h1>
+          Hello {handleNameChange()}
+        </h1>
+          <h3>{name}</h3>
+          <p>{'哈哈'}</p>
       </header>
     </div>
   );
