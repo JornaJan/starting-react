@@ -2,18 +2,43 @@
   "items": [
     {
       "id": 1,
-      "checked": false,
+      "checked": true,
       "item": "A JavaScript library for building user interfaces"
     },
     {
-      "id": 2,
-      "checked": false,
-      "item": "Pizza"
+      "id": 4,
+      "checked": true,
+      "item": "abc"
     },
     {
-      "id": 3,
+      "id": 5,
+      "checked": true,
+      "item": "cdb"
+    },
+    {
+      "id": 6,
+      "checked": true,
+      "item": "reactjs"
+    },
+    {
+      "id": 7,
+      "checked": true,
+      "item": "what are you doing?"
+    },
+    {
+      "id": 8,
       "checked": false,
-      "item": "Apple"
+      "item": "hong10"
+    },
+    {
+      "id": 9,
+      "checked": false,
+      "item": "wing"
+    },
+    {
+      "id": 10,
+      "checked": false,
+      "item": "apple"
     }
   ]
 }
