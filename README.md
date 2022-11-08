@@ -21,3 +21,7 @@ const AddItem = ({newItem, setNewItem, handleSubmit}) => {
 }
 ```
 
+#### json-server
+启动json-server
+
+- npx json-server -p 3500 -w data/db.json
