@@ -6,42 +6,40 @@ import NavComp from './Nav'
 import Home from './Home'
 import Footer from './Footer'
 import NewPost from './NewPost'
+import EditPost from './EditPost'
 import PostPage from './PostPage'
 import About from './About'
 import Missing from './Missing'
+import api from './api/posts'
 
 function App() {
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      title: "My first Post",
-      datetime: "July 01 2022 14:58:00 AM",
-      body: "lorem siLorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups"
-    },
-    {
-      id: 2,
-      title: "My 2nd Post",
-      datetime: "July 01 2022 14:58:00 AM",
-      body: "lorem siLorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups"
-    },
-    {
-      id: 3,
-      title: "My 3rd Post",
-      datetime: "July 01 2022 14:58:00 AM",
-      body: "lorem siLorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups"
-    },
-    {
-      id: 4,
-      title: "My Fourth Post",
-      datetime: "July 01 2022 14:58:00 AM",
-      body: "lorem siLorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups"
-    }
-  ])
+  const [posts, setPosts] = useState([])
   const [search, setSearch] = useState('')
   const [searchResult, setSearchResult] = useState([])
   const [postTitle, setPostTitle] = useState('')
   const [postBody, setPostBody] = useState('')
+  const [editTitle, setEditTitle] = useState('')
+  const [editBody, setEditBody] = useState('')
   const history = useHistory()
+
+  useEffect(() => {
+    const fetchProps = async () => {
+      try {
+        const response = await api.get('/posts')
+        setPosts(response.data)
+      } catch (e) {
+        if (e.response) {
+          // Not in the 200 response range
+          console.log(e.response.data)
+          console.log(e.response.status)
+          console.log(e.response.headers)
+        } else {
+          console.log(`Error: ${e.message}`)
+        }
+      }
+    }
+    fetchProps()
+  }, [])
 
   useEffect(() => {
     const filteredResults = posts.filter(post => ((post.body).toLowerCase()).includes(search.toLowerCase())
@@ -50,24 +48,49 @@ function App() {
       setSearchResult(filteredResults.reverse())
   }, [posts, search])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     const id = posts.length ? posts[posts.length - 1].id + 1 : 1
     const datetime = format(new Date(), 'MMMM dd, yyyy pp')
     const newPost = {id, title: postTitle, datetime, body: postBody}
-    const allPosts = [...posts, newPost]
-    setPosts(allPosts)
-    setPostTitle('')
-    setPostBody('')
-    history.push('/')
+    try {
+      const response = await api.post('/posts', newPost)
+      const allPosts = [...posts, response.data]
+      setPosts(allPosts)
+      setPostTitle('')
+      setPostBody('')
+      history.push('/')
+    } catch (err) {
+      console.log(`Error: ${err.message}`)
+    }
 
   }
 
-  const handleDelete = (id) => {
+  const handleEdit = async (id) => {
+    const datetime = format(new Date(), 'MMMM dd, yyyy pp')
+    const updatePost = {id, title: editTitle, datetime, body: editBody}
+    try {
+
+      const response = await api.put(`/posts/${id}`, updatePost)
+      setPosts(posts.map(post => post.id === id ? {...response.data} : post))
+      setEditTitle('')
+      setEditBody('')
+      history.push('/')
+    } catch (err) {
+      console.log(`Error: ${err.message}`)
+    }
+  }
+
+  const handleDelete = async (id) => {
+    try {
+    await api.delete(`/posts/${id}`)  
     const postsList = posts.filter(post => post.id !== id)
     setPosts(postsList)
     history.push('/')
+    } catch (error) {
+      console.log(`Error: ${error.message}`)
+    }
 
   }
 
@@ -86,6 +109,16 @@ function App() {
             setPostTitle={setPostTitle} 
             postBody={postBody}
             setPostBody={setPostBody}
+          />
+        </Route>
+        <Route path="/edit/:id">
+          <EditPost 
+            posts={posts}
+            handleEdit={handleEdit} 
+            editTitle={editTitle} 
+            setEditTitle={setEditTitle} 
+            editBody={editBody}
+            setEditBody={setEditBody}
           />
         </Route>
         <Route path="/post/:id">
