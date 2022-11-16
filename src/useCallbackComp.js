@@ -15,8 +15,8 @@ const UseCallbackComp = () => {
 
   useEffect(() => {
     console.log(`New array: ${buildArray()}`)
-   //setResult(buildArray())
-    setResult(sum2())
+   setResult(buildArray())
+  //  setResult(sum2())
   }, [buildArray])
   return (
     <>
