@@ -3,13 +3,8 @@ import { useState, useEffect, useCallback } from 'react'
 const UseCallbackComp = () => {
   const [userInput2, setUserInput2] = useState('')
   const [result, setResult] = useState(0)
-
-
-
   const [num3] = useState(8)
   const [num4] = useState(2)
-
-
   const sum2 = useCallback(() => num3 + num4, [num3, num4])
   const buildArray = useCallback(() => [num3, num4], [num3, num4])
 
@@ -20,6 +15,8 @@ const UseCallbackComp = () => {
   }, [buildArray])
   return (
     <>
+
+      <h3>useCallback</h3>
       <h1>{userInput2}</h1>
       <input 
         type="text" 

@@ -1,10 +1,11 @@
-import UseCallbackComp from './useCallbackComp'
+import UseCallbackComp from './UseCallbackComp'
+import UseMemoComp from './UseMemoComp'
 function App() {
   return (
     <div className="App">
       <h1>React Hooks</h1>
-      <h3>useCallback</h3>
       <UseCallbackComp />
+      <UseMemoComp />
     </div>
   );
 }
