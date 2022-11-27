@@ -1,6 +1,8 @@
 import UseCallbackComp from './UseCallbackComp'
 import UseMemoComp from './UseMemoComp'
 import UseRefComp from './UseRefComp'
+import UseReducerMain from './UseReducer'
+
 function App() {
   return (
     <div className="App">
@@ -8,6 +10,7 @@ function App() {
       <UseCallbackComp />
       <UseMemoComp />
       <UseRefComp />
+      <UseReducerMain />
     </div>
   );
 }
