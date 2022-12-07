@@ -5,7 +5,17 @@ function App() {
   const [sectionStyle, setSectionStyle] = useState({})
   const sectionRef = useRef()
 
-  useLayoutEffect(() => {
+  /**
+  useEffect(() => { // 异步
+    const random = Math.floor(Math.random() * 500)
+
+    for (let i = 0; i <= 100000000; i++) {
+      if (i === 100000000) setSectionStyle({paddingTop: `${random}px`})
+    }
+  }, [number])
+* */
+
+  useLayoutEffect(() => { // 同步
     const random = Math.floor(Math.random() * 500)
 
     for (let i = 0; i <= 100000000; i++) {
